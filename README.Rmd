@@ -48,18 +48,35 @@ k_means(mydata, 3, PCA = F)
 Comparison with kmeans function in the stats package
 
 ```{r}
-kmeans(mydata, 3)
+km1 <- kmeans(mydata, 3)
+
+km1
+km1$tot.withinss
+```
+
+K-Means clustering with high dimensions
+```{r}
+k_means(mtcars, 3, PCA = F)
+```
+
+Comparison with kmeans function in the stat package
+
+```{r}
+km2 <- kmeans(mtcars, 3)
+
+km2
+km2$tot.withinss
 ```
 
 Example of k_means using PCA 
 
 ```{r}
-k_means(mtcars, 3, PCA = T)
+k_means(mtcars, 7, PCA = T)
 ```
 
 Example of k_means using PCA and the k-means++ algorithm for improved initialization
 ```{r}
-k_means(mtcars, 3, PCA = T, plus.plus = T)
+k_means(mtcars, 7, PCA = T, plus.plus = T)
 ```
 
 
