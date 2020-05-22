@@ -62,22 +62,25 @@ k_means = function(x, centers, PCA = F, plus.plus = F){
     clust = rep(NA, nrow(tempdf))
     dists = rep(NA, nrow(tempdf))
 
-    for(i in 1:nrow(tempdf)){
+    for(l in 1:nrow(tempdf)){
 
-      tempdist = as.matrix(dist(rbind(k.means, tempdf[i,])))
+      tempdist = as.matrix(dist(rbind(k.means, tempdf[l,])))
       tempdist = tempdist[nrow(tempdist), 1:nrow(tempdist)-1]
-      clust[i] = which.min(tempdist)
-      dists[i] = min(tempdist)
+      clust[l] = which.min(tempdist)
+      dists[l] = min(tempdist)
 
     }
 
     tempdf = cbind(tempdf, clust, dists)
     SSE = sum(dists^2)
-    k.means = cbind(tapply(tempdf[,1], tempdf[,3], mean),
-                    tapply(tempdf[,2], tempdf[,3], mean))
+
+    for(z in 1:(ncol(tempdf)-2)){
+      k.means[,z] = tapply(tempdf[,z], tempdf[,ncol(tempdf)-1], mean)
+    }
 
   }
 
-  return(list('Clustering vector' = tempdf[,3], 'Cluster Means' = k.means, 'Total SSE' = SSE))
+  return(list('Clustering vector' = tempdf[,ncol(tempdf)-1], 'Cluster Means' = k.means, 'Total SSE' = SSE))
 
 }
+
