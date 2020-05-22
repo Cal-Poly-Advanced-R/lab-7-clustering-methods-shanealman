@@ -7,6 +7,7 @@
 #'
 #' @param x numeric matrix of data, or an object that can be coerced to such a matrix
 #' (such as a numeric vector or a data frame with all numeric columns).
+#' @param method the distance measure to be used. This must be one of euclidean or manhattan.
 #'
 #' @return A vector with what was merged and in what order.
 #'
@@ -15,9 +16,11 @@
 #'
 #' @export
 
-hier_clust = function(x){
+hier_clust = function(x, method = 'euclidean'){
 
-  dists = diag.remove(as.matrix(dist(x)))
+  dists = diag.remove(as.matrix(
+    dist(x, method = ifelse(method == 'euclidean', 'euclidean', 'manhattan'))))
+
   merges = NULL
   i = 1
 

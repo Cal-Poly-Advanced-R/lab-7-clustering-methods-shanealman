@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of clust431 is to ...
+The goal of clust431 is to preform hierarchical clustering and k-means clustering.
 
 ## Installation
 
@@ -28,27 +28,62 @@ You can install the released version of clust431 from [CRAN](https://CRAN.R-proj
 install.packages("clust431")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
+```{r echo = T, include = F}
 library(clust431)
-## basic example code
+library(tidyverse)
+library(sna)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## Example K-Means
 
-```{r cars}
-summary(cars)
+K-Means clustering example on a dataset of two variables using k_means
+
+```{r}
+mydata <- select(iris, Petal.Length, Petal.Width)
+
+
+k_means(mydata, 3, PCA = F)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+Comparison with kmeans function in the stats package
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r}
+kmeans(mydata, 3)
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+Example of k_means using PCA 
+
+```{r}
+k_means(mtcars, 3, PCA = T)
+```
+
+Example of k_means using PCA and the k-means++ algorithm for improved initialization
+```{r}
+k_means(mtcars, 3, PCA = T, plus.plus = T)
+```
+
+
+## Example Hierarchical Clustering
+
+Hierarchical clustering on a dataset
+
+```{r}
+mydata <- select(mtcars, mpg, cyl) %>% head(6)
+
+hier_clust(mydata)
+```
+
+Comparison using the hclust function in the stats package
+```{r}
+mydata %>% dist() %>% hclust() %>% plot(sub = "")
+```
+
+Example of hierachical clustering using the manhattan distance metric
+```{r}
+hier_clust(mydata, method = 'manhattan')
+```
+
+Example of hierachical clustering using a large dataset 
+```{r}
+hier_clust(mtcars)
+```

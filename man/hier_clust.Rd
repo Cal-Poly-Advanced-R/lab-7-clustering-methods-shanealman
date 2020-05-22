@@ -9,6 +9,8 @@ hier_clust(x)
 \arguments{
 \item{x}{numeric matrix of data, or an object that can be coerced to such a matrix
 (such as a numeric vector or a data frame with all numeric columns).}
+
+\item{method}{the distance measure to be used. This must be one of euclidean or manhattan.}
 }
 \value{
 A vector with what was merged and in what order.
